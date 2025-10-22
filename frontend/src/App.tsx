@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { api } from "./api";
 
 function App() {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("hello natheme");
 
   useEffect(() => {
     api.get("/").then((res) => setMessage(res.data));
