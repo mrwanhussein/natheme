@@ -8,7 +8,7 @@ function App() {
     api.get("/").then((res) => setMessage(res.data));
   }, []);
 
-  return <h1>hello</h1>;
+  return <h1>{message}</h1>;
 }
 
 export default App;
