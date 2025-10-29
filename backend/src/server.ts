@@ -2,6 +2,9 @@ import express from "express";
 import { Pool } from "pg";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes";
+import projectsRoutes from "./routes/projectsRoutes";
+import contactRoutes from "./routes/contactRoutes";
+import catalogRoutes from "./routes/catalogRoutes";
 
 dotenv.config();
 
@@ -51,8 +54,12 @@ const pool = new Pool({ connectionString });
   }
 })();
 
-// ✅ Use auth routes
+// 🧭 Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/projects", projectsRoutes);
+app.use("/api/contact", contactRoutes);
+app.use("/api/catalogs", catalogRoutes);
+app.use("/uploads", express.static("uploads"));
 
 // 🧪 Simple test route
 app.get("/", async (req, res) => {
