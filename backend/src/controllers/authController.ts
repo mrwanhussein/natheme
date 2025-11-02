@@ -23,6 +23,12 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
       res.status(400).json({ message: "Please fill in all required fields" });
       return;
     }
+    // 📧 Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      res.status(400).json({ message: "Please enter a valid email address" });
+      return;
+    }
 
     if (password !== confirmPassword) {
       res.status(400).json({ message: "Passwords do not match" });
@@ -51,17 +57,22 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
     // 🔒 Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 💾 Insert new user
+    // 💾 Insert new user with default role = 'customer'
     const newUserResult = await pool.query(
-      "INSERT INTO users (name, email, password, phone, location) VALUES ($1, $2, $3, $4, $5) RETURNING id, name, email, phone, location",
+      `INSERT INTO users (name, email, password, phone, location, role)
+       VALUES ($1, $2, $3, $4, $5, DEFAULT)
+       RETURNING id, name, email, phone, location, role`,
       [name, email, hashedPassword, phone, location]
     );
+
     const newUser = newUserResult.rows[0];
 
-    // 🎫 Generate JWT
-    const token = jwt.sign({ id: newUser.id, email }, JWT_SECRET, {
-      expiresIn: "7d",
-    });
+    // 🎫 Generate JWT (now includes role)
+    const token = jwt.sign(
+      { id: newUser.id, email: newUser.email, role: newUser.role },
+      JWT_SECRET,
+      { expiresIn: "7d" }
+    );
 
     res.status(201).json({
       message: "User registered successfully",
@@ -94,9 +105,12 @@ export const signin = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(
+      { id: user.id, email: user.email, role: user.role },
+      JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
     delete user.password;
 
     res.json({ message: "Login successful", user, token });

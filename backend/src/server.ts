@@ -5,6 +5,8 @@ import authRoutes from "./routes/authRoutes";
 import projectsRoutes from "./routes/projectsRoutes";
 import contactRoutes from "./routes/contactRoutes";
 import catalogRoutes from "./routes/catalogRoutes";
+import adminRoutes from "./routes/adminRoutes";
+import userRoutes from "./routes/userRoutes";
 
 dotenv.config();
 
@@ -56,11 +58,12 @@ const pool = new Pool({ connectionString });
 
 // 🧭 Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
 app.use("/api/projects", projectsRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/catalogs", catalogRoutes);
 app.use("/uploads", express.static("uploads"));
-
+app.use("/api/users", userRoutes);
 // 🧪 Simple test route
 app.get("/", async (req, res) => {
   try {
@@ -78,3 +81,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
+console.log("JWT Secret in use:", process.env.JWT_SECRET);
