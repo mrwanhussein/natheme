@@ -188,50 +188,6 @@ export default function HomePage() {
       {/* 🌿 MAIN PAGE CONTENT */}
       {!showIntro && (
         <>
-          {/* NAVBAR */}
-          <nav className="absolute top-0 left-0 w-full z-40 px-8 py-5 flex items-center justify-between bg-gradient-to-b from-[#01363A]/80 to-transparent">
-            <div className="flex items-center gap-3">
-              <Image
-                src="/finallogo.svg"
-                alt="Natheme Logo"
-                width={50}
-                height={50}
-              />
-              <span className="text-2xl font-bold text-[#A4E96C] tracking-wide">
-                Natheme
-              </span>
-            </div>
-
-            <ul className="hidden md:flex gap-8 text-[#E7FFCF] text-lg font-medium">
-              <li>
-                <Link href="/" className="hover:text-[#A4E96C] transition">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/solutions"
-                  className="hover:text-[#A4E96C] transition"
-                >
-                  Solutions
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-[#A4E96C] transition">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="hover:text-[#A4E96C] transition"
-                >
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </nav>
-
           {/* HERO SECTION */}
           <section
             id="home"

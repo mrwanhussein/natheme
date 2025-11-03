@@ -7,10 +7,19 @@ import contactRoutes from "./routes/contactRoutes";
 import catalogRoutes from "./routes/catalogRoutes";
 import adminRoutes from "./routes/adminRoutes";
 import userRoutes from "./routes/userRoutes";
+import cors from "cors";
 
 dotenv.config();
 
 const app = express();
+app.use(
+  cors({
+    origin: "http://localhost:3000", // your React/Next.js frontend
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
 app.use(express.json());
 // 🧠 Choose which DB to connect to automatically
 const connectionString =

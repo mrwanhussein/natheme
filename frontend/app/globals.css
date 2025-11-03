@@ -1,26 +1,122 @@
 @import "tailwindcss";
 
+/* 🌿 Root variables for consistent theming */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand Colors */
+  --color-primary: #a4e96c; /* Light green */
+  --color-secondary: #01363a; /* Deep green background */
+  --color-accent: #e7ffcf; /* Soft accent green */
+  --color-dark: #012e32; /* Slightly darker tone */
+  --color-light: #f9fff3; /* Light background alternative */
+
+  /* Typography */
+  --font-primary: "Poppins", "Arial", sans-serif;
+  --font-heading: "Montserrat", "Poppins", sans-serif;
+
+  /* Layout */
+  --border-radius: 12px;
+  --transition-fast: 0.25s ease;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* 🌍 Global body styling */
+body {
+  background-color: var(--color-secondary);
+  color: var(--color-accent);
+  font-family: var(--font-primary);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ✨ Smooth transitions for all theme changes */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 🎨 Buttons */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  transition: transform var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent);
+  transform: scale(1.05);
+}
+
+/* 🪴 Secondary button style */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  transition: all var(--transition-fast);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+}
+
+/* 🌱 Section titles */
+.section-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 2rem;
+  text-align: center;
+  color: var(--color-primary);
+  margin-bottom: 1.5rem;
+}
+
+/* 🪞 Utility: center content vertically & horizontally */
+.center-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 💨 Smooth fade-in animations for sections */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.7s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* 🌙 Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #0a0a0a;
+    color: #ededed;
+  }
+
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: #0a0a0a;
+  }
+
+  .btn-secondary {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+}
+.input {
+  @apply p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#E7FFCF];
 }
