@@ -9,7 +9,9 @@ type Decoded = { id?: number; email?: string; role?: string; exp?: number };
 export default function Navbar() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [showProjects, setShowProjects] = useState(true);
 
+  // 🧠 Check authentication
   useEffect(() => {
     const checkAuth = () => {
       try {
@@ -38,6 +40,21 @@ export default function Navbar() {
     };
   }, []);
 
+  // 🧩 Check if projects exist
+  useEffect(() => {
+    const checkProjects = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/projects");
+        const data = await res.json();
+        if (!data || data.length === 0) setShowProjects(false);
+      } catch {
+        setShowProjects(false);
+      }
+    };
+    checkProjects();
+  }, []);
+
+  // 🚪 Handle logout
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUserEmail(null);
@@ -58,22 +75,51 @@ export default function Navbar() {
 
       {/* Desktop Navigation */}
       <ul className="hidden md:flex gap-8 text-[#E7FFCF] text-lg font-medium items-center">
-        {[
-          { name: "Home", path: "/" },
-          { name: "Solutions", path: "/solutions" },
-          { name: "Projects", path: "/projects" },
-          { name: "About", path: "/about" },
-          { name: "Contact", path: "/contact" },
-        ].map((item) => (
-          <li key={item.name}>
+        <li>
+          <Link
+            className="nav-link relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-[#E7FFCF] after:left-0 after:-bottom-1 hover:after:w-full after:transition-all after:duration-300 hover:text-[#c4f5a2] transition-colors duration-300"
+            href="/"
+          >
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="nav-link relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-[#E7FFCF] after:left-0 after:-bottom-1 hover:after:w-full after:transition-all after:duration-300 hover:text-[#c4f5a2] transition-colors duration-300"
+            href="/solutions"
+          >
+            Solutions
+          </Link>
+        </li>
+
+        {/* 👇 Only show if projects exist */}
+        {showProjects && (
+          <li>
             <Link
               className="nav-link relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-[#E7FFCF] after:left-0 after:-bottom-1 hover:after:w-full after:transition-all after:duration-300 hover:text-[#c4f5a2] transition-colors duration-300"
-              href={item.path}
+              href="/projects"
             >
-              {item.name}
+              Projects
             </Link>
           </li>
-        ))}
+        )}
+
+        <li>
+          <Link
+            className="nav-link relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-[#E7FFCF] after:left-0 after:-bottom-1 hover:after:w-full after:transition-all after:duration-300 hover:text-[#c4f5a2] transition-colors duration-300"
+            href="/about"
+          >
+            About
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="nav-link relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-[#E7FFCF] after:left-0 after:-bottom-1 hover:after:w-full after:transition-all after:duration-300 hover:text-[#c4f5a2] transition-colors duration-300"
+            href="/contact"
+          >
+            Contact
+          </Link>
+        </li>
 
         {isAdmin && (
           <li>

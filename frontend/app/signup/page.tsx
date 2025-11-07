@@ -106,14 +106,14 @@ export default function SignUpPage() {
           <input
             type="text"
             name="phone"
-            placeholder="Phone (optional)"
+            placeholder="Phone "
             onChange={handleChange}
             className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#E7FFCF]"
           />
           <input
             type="text"
             name="location"
-            placeholder="Location (optional)"
+            placeholder="Location "
             onChange={handleChange}
             className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#E7FFCF]"
           />
