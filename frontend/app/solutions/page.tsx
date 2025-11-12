@@ -104,9 +104,9 @@ export default function SolutionsPage() {
         <div className="w-full md:w-1/2 relative">
           <Slider {...sliderSettings}>
             {[
-              "/building-walls-1.jpg",
-              "/building-walls-2.jpg",
-              "/building-walls-3.jpg",
+              "/building-walls-111.jpg",
+              "/building-walls-222.jpg",
+              "/building-walls-333.jpg",
             ].map((img, i) => (
               <div key={i} className="flex justify-center">
                 <Image
@@ -173,7 +173,14 @@ export default function SolutionsPage() {
                 {catalog.description}
               </p>
               <a
-                href={`http://localhost:5000/${catalog.file_path}`}
+                href={
+                  catalog.file_path.startsWith("http")
+                    ? catalog.file_path
+                    : `http://localhost:5000/${catalog.file_path.replace(
+                        /^\/+/,
+                        ""
+                      )}`
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#E7FFCF] text-[#01363A] px-6 py-3 rounded-xl font-semibold shadow-md hover:scale-105 transition-transform hover:shadow-[#E7FFCF]/40"

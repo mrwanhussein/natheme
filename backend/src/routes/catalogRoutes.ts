@@ -1,9 +1,9 @@
 import express from "express";
-import { upload } from "../config/multer";
+import { uploadCatalog } from "../config/multer";
 import {
-  uploadCatalog,
   getCatalogs,
   deleteCatalog,
+  CreateCatalog,
 } from "../controllers/catalogController";
 import { authenticateUser } from "../middleware/authMiddleware"; // only admins upload
 import { isAdmin } from "../middleware/isAdmin";
@@ -15,8 +15,8 @@ router.post(
   "/upload",
   authenticateUser,
   isAdmin,
-  upload.single("file"),
-  uploadCatalog
+  uploadCatalog.single("file"),
+  CreateCatalog
 );
 
 // Get all catalogs

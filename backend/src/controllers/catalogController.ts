@@ -3,7 +3,7 @@ import pool from "../config/db";
 import fs from "fs";
 import path from "path";
 
-export const uploadCatalog = async (req: Request, res: Response) => {
+export const CreateCatalog = async (req: Request, res: Response) => {
   const { title, description } = req.body;
   const filePath = req.file?.path;
 

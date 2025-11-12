@@ -17,21 +17,34 @@ export const getProjects = async (
 };
 
 // POST /api/projects
-export const createProject = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const { name, description, image_urls }: Project = req.body;
 
+export const createProject = async (req: Request, res: Response) => {
   try {
+    const { name, description } = req.body;
+    const files = req.files as Express.Multer.File[];
+
+    // ✅ Convert relative file paths to full URLs (so frontend can display them)
+    const imageUrls =
+      files?.map(
+        (file) =>
+          `${req.protocol}://${req.get("host")}/${file.path.replace(
+            /\\/g,
+            "/"
+          )}`
+      ) || [];
+
     const result = await pool.query(
       'INSERT INTO "Projects" (name, description, image_urls) VALUES ($1, $2, $3) RETURNING *',
-      [name, description, image_urls]
+      [name, description, imageUrls]
     );
-    res.status(201).json(result.rows[0]);
+
+    res.status(201).json({
+      message: "Project created successfully",
+      project: result.rows[0],
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
+    console.error("createProject error:", error);
+    res.status(500).json({ message: "Failed to create project" });
   }
 };
 

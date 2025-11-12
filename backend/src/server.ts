@@ -8,10 +8,12 @@ import catalogRoutes from "./routes/catalogRoutes";
 import adminRoutes from "./routes/adminRoutes";
 import userRoutes from "./routes/userRoutes";
 import cors from "cors";
+import path from "path";
 
 dotenv.config();
 
 const app = express();
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use(
   cors({
     origin: "http://localhost:3000", // your React/Next.js frontend
@@ -66,13 +68,14 @@ const pool = new Pool({ connectionString });
 })();
 
 // 🧭 Routes
+
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/projects", projectsRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/catalogs", catalogRoutes);
-app.use("/uploads", express.static("uploads"));
 app.use("/api/users", userRoutes);
+
 // 🧪 Simple test route
 app.get("/", async (req, res) => {
   try {
