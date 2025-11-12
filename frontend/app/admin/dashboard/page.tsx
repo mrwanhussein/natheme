@@ -374,7 +374,7 @@ export default function AdminDashboardPage() {
           marginTop: "2rem", // Added margin to move it down
         }}
       >
-        Admin Dashboard
+        Dashboard Control
       </h1>
 
       {/* Tabs (pills) */}
@@ -401,7 +401,7 @@ export default function AdminDashboardPage() {
           >
             📚 Catalogs
           </TabPill>
-          {decoded?.role === "admin" && (
+          {decoded?.email === "marwanahmed@example.com" && (
             <TabPill active={tab === "users"} onClick={() => setTab("users")}>
               👑 Owners
             </TabPill>
@@ -757,9 +757,9 @@ export default function AdminDashboardPage() {
       )}
 
       {/* ===== USERS TAB ===== */}
-      {tab === "users" && decoded?.role === "admin" && (
+      {tab === "users" && decoded?.email === "marwanahmed@example.com" && (
         <div>
-          <h2 className="section-title mb-4">Manage Users</h2>
+          <h2 className="section-title mb-4">Manage Admins</h2>
 
           {/* ✅ Promote/Demote Section */}
           <div className="flex flex-wrap items-center gap-3 mb-6 bg-[var(--color-dark)] p-4 rounded-2xl shadow">
